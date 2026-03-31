@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wachtwoord instellen — Team Oxygen</title>
+<script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: Inter, Arial, sans-serif;
+    background: #f7f6f2;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .card {
+    background: white;
+    border-radius: 12px;
+    padding: 2.5rem;
+    max-width: 400px;
+    width: 100%;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+    text-align: center;
+  }
+  .logo { font-family: Inter, sans-serif; font-size: 22px; font-weight: 800; color: #1a1a17; margin-bottom: .3rem; }
+  .logo span { color: #00a8cc; }
+  p { font-size: 14px; color: #6b6a63; margin: .8rem 0 1.5rem; line-height: 1.6; }
+  input {
+    width: 100%;
+    padding: .75rem 1rem;
+    border: 1.5px solid #e0dfd8;
+    border-radius: 6px;
+    font-size: 15px;
+    margin-bottom: .8rem;
+    outline: none;
+    font-family: Inter, sans-serif;
+  }
+  input:focus { border-color: #00a8cc; }
+  button {
+    width: 100%;
+    padding: .85rem;
+    background: #00a8cc;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    font-family: Inter, sans-serif;
+    letter-spacing: .03em;
+  }
+  button:hover { background: #007a99; }
+  .msg { margin-top: 1rem; font-size: 13px; color: #00a8cc; display: none; }
+  .err { color: #e24b4a; }
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="logo">Team <span>Oxygen</span></div>
+  <p>Stel hier je wachtwoord in voor de beheerpagina.</p>
+  <input type="password" id="pw1" placeholder="Nieuw wachtwoord" />
+  <input type="password" id="pw2" placeholder="Herhaal wachtwoord" />
+  <button onclick="stelIn()">Wachtwoord instellen</button>
+  <div class="msg" id="msg"></div>
+</div>
+
+<script>
+  // Haal de recovery token uit de URL
+  function getToken() {
+    const hash = window.location.hash;
+    const match = hash.match(/recovery_token=([^&]+)/);
+    if (match) return match[1];
+    const params = new URLSearchParams(window.location.search);
+    return params.get('recovery_token');
+  }
+
+  const token = getToken();
+
+  function toon(tekst, fout) {
+    const el = document.getElementById('msg');
+    el.textContent = tekst;
+    el.style.display = 'block';
+    el.className = 'msg' + (fout ? ' err' : '');
+  }
+
+  function stelIn() {
+    const pw1 = document.getElementById('pw1').value;
+    const pw2 = document.getElementById('pw2').value;
+
+    if (!token) {
+      toon('Geen geldig token gevonden. Vraag een nieuwe herstelmail aan.', true);
+      return;
+    }
+    if (pw1.length < 8) {
+      toon('Wachtwoord moet minimaal 8 tekens zijn.', true);
+      return;
+    }
+    if (pw1 !== pw2) {
+      toon('Wachtwoorden komen niet overeen.', true);
+      return;
+    }
+
+    // Netlify Identity API aanroepen
+    fetch('/.netlify/identity/recover', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ token: token, password: pw1 })
+    })
+    .then(r => r.json())
+    .then(data => {
+      if (data.access_token || data.token_type) {
+        toon('Wachtwoord ingesteld! Je wordt doorgestuurd...', false);
+        setTimeout(() => { window.location.href = '/admin/'; }, 2000);
+      } else {
+        toon('Er ging iets mis. Vraag een nieuwe herstelmail aan.', true);
+      }
+    })
+    .catch(() => {
+      toon('Er ging iets mis. Probeer het opnieuw.', true);
+    });
+  }
+</script>
+</body>
+</html>
