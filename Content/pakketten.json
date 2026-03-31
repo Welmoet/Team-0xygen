@@ -1,0 +1,17 @@
+{
+  "core": {
+    "prijs": "€ 8.500 / maand",
+    "prijsnoot": "excl. BTW · minimaal 6 maanden",
+    "omschrijving": "De volledige marketingfunctie als doorlopend partnerschap. Jouw CMO, jouw team, jouw resultaat."
+  },
+  "sprint": {
+    "prijs": "€ 18.000 – 45.000",
+    "prijsnoot": "per project · afhankelijk van scope",
+    "omschrijving": "Een afgebakend transformatietraject met vaste scope, prijs en doorlooptijd."
+  },
+  "bridge": {
+    "prijs": "€ 1.350 / dag",
+    "prijsnoot": "excl. BTW · wekelijks factureerbaar",
+    "omschrijving": "Welmoet fulltime als interim CMO bij een kritiek kantelpunt. Tijdelijk, maar met blijvend resultaat."
+  }
+}

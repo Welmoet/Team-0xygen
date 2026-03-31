@@ -1,0 +1,1123 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Team Oxygen — Embedded Marketing Partner</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --white: #ffffff;
+    --off-white: #f7f6f2;
+    --surface: #f0efe9;
+    --surface2: #e8e7e0;
+    --black: #0f0f0d;
+    --near-black: #1a1a17;
+    --text: #1a1a17;
+    --text-muted: #6b6a63;
+    --text-light: #9b9a93;
+    --cyan: #00a8cc;
+    --cyan-dark: #007a99;
+    --cyan-light: #e6f7fb;
+    --cyan-glow: rgba(0,168,204,0.1);
+    --border: rgba(0,0,0,0.08);
+    --border-strong: rgba(0,0,0,0.14);
+    --font: 'Inter', sans-serif;
+    --font-body: 'DM Sans', sans-serif;
+  }
+
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--white);
+    color: var(--text);
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.2rem 3rem;
+    background: rgba(255,255,255,0.92);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+    transition: padding .3s, box-shadow .3s;
+  }
+
+  nav.scrolled {
+    padding: .75rem 3rem;
+    box-shadow: 0 2px 24px rgba(0,0,0,0.06);
+  }
+
+  .nav-logo img { height: 34px; width: auto; display: block; }
+
+  .nav-links { display: flex; gap: 2.2rem; list-style: none; }
+  .nav-links a {
+    font-family: var(--font);
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-muted);
+    text-decoration: none;
+    letter-spacing: .02em;
+    transition: color .2s;
+  }
+  .nav-links a:hover { color: var(--cyan); }
+
+  .nav-cta {
+    font-family: var(--font);
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--white) !important;
+    background: var(--cyan);
+    padding: .55rem 1.3rem;
+    border-radius: 4px;
+    text-decoration: none;
+    transition: background .2s;
+  }
+  .nav-cta:hover { background: var(--cyan-dark); }
+
+  /* ── HERO ── */
+  .hero {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    min-height: 680px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    background: var(--off-white);
+  }
+
+  /* Hero photo background */
+  .hero-photo {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  }
+
+  .hero-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    display: block;
+    transition: opacity .6s ease;
+  }
+
+  /* Overlay so text stays readable over photo */
+  .hero-photo::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      105deg,
+      rgba(247,246,242,0.96) 0%,
+      rgba(247,246,242,0.88) 45%,
+      rgba(247,246,242,0.35) 75%,
+      rgba(247,246,242,0.1) 100%
+    );
+  }
+
+  /* Placeholder shown when no photo uploaded yet */
+  .hero-placeholder {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    background:
+      radial-gradient(ellipse 60% 70% at 75% 50%, rgba(0,168,204,0.08) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 40% at 90% 20%, rgba(0,168,204,0.05) 0%, transparent 60%),
+      var(--off-white);
+  }
+
+  /* Decorative circles */
+  .hero-decor {
+    position: absolute;
+    right: 5%;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .decor-ring {
+    position: absolute;
+    border-radius: 50%;
+    border: 1.5px solid rgba(0,168,204,0.15);
+  }
+  .dr1 { width: 380px; height: 380px; top: -190px; left: -190px; animation: ring-pulse 7s ease-in-out infinite; }
+  .dr2 { width: 220px; height: 220px; top: -80px; left: -330px; border-color: rgba(0,168,204,0.1); animation: ring-pulse 9s ease-in-out infinite 1.5s; }
+  .dr3 { width: 120px; height: 120px; top: -20px; left: -140px; border-color: rgba(0,168,204,0.08); animation: ring-pulse 11s ease-in-out infinite 3s; }
+
+  @keyframes ring-pulse {
+    0%, 100% { transform: scale(1); opacity: .5; }
+    50% { transform: scale(1.05); opacity: 1; }
+  }
+
+  .slides { position: absolute; inset: 0; z-index: 2; display: flex; align-items: center; }
+
+  .slide {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity 1.2s ease;
+    display: flex;
+    align-items: center;
+  }
+  .slide.active { opacity: 1; }
+
+  .slide-content {
+    position: relative;
+    z-index: 3;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 3rem;
+    width: 100%;
+  }
+
+  .slide-label {
+    font-family: var(--font);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--cyan);
+    margin-bottom: 1.2rem;
+    opacity: 0;
+    transform: translateY(18px);
+    transition: opacity .8s .2s, transform .8s .2s;
+  }
+
+  .slide-headline {
+    font-family: var(--font);
+    font-size: clamp(34px, 4.5vw, 62px);
+    font-weight: 800;
+    line-height: 1.08;
+    color: var(--text);
+    margin-bottom: 1.4rem;
+    max-width: 640px;
+    opacity: 0;
+    transform: translateY(22px);
+    transition: opacity .8s .35s, transform .8s .35s;
+  }
+
+  .slide-headline em {
+    font-style: normal;
+    color: var(--cyan);
+  }
+
+  .slide-body {
+    font-size: 17px;
+    font-weight: 300;
+    color: var(--text-muted);
+    max-width: 500px;
+    line-height: 1.7;
+    margin-bottom: 2.2rem;
+    opacity: 0;
+    transform: translateY(18px);
+    transition: opacity .8s .5s, transform .8s .5s;
+  }
+
+  .slide-actions {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    opacity: 0;
+    transform: translateY(14px);
+    transition: opacity .8s .65s, transform .8s .65s;
+  }
+
+  .slide.active .slide-label,
+  .slide.active .slide-headline,
+  .slide.active .slide-body,
+  .slide.active .slide-actions {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .btn-primary {
+    font-family: var(--font);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: .04em;
+    color: var(--white);
+    background: var(--cyan);
+    border: none;
+    padding: .85rem 2rem;
+    border-radius: 4px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background .2s, transform .2s;
+    display: inline-block;
+  }
+  .btn-primary:hover { background: var(--cyan-dark); transform: translateY(-1px); }
+
+  .btn-ghost {
+    font-family: var(--font);
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text);
+    background: transparent;
+    border: 1.5px solid var(--border-strong);
+    padding: .85rem 2rem;
+    border-radius: 4px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: border-color .2s, color .2s;
+    display: inline-block;
+  }
+  .btn-ghost:hover { border-color: var(--cyan); color: var(--cyan); }
+
+  .slide-indicators {
+    position: absolute;
+    bottom: 2.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: .6rem;
+    z-index: 10;
+  }
+
+  .indicator {
+    width: 28px;
+    height: 3px;
+    background: rgba(0,0,0,0.15);
+    border-radius: 2px;
+    cursor: pointer;
+    transition: background .3s, width .3s;
+    border: none;
+  }
+  .indicator.active { background: var(--cyan); width: 48px; }
+
+  .slide-progress {
+    position: absolute;
+    bottom: 0; left: 0;
+    height: 2px;
+    background: var(--cyan);
+    width: 0%;
+    z-index: 10;
+    transition: none;
+    opacity: .5;
+  }
+  .slide-progress.animating { transition: width 5s linear; width: 100%; }
+
+  .scroll-hint {
+    position: absolute;
+    bottom: 2.2rem;
+    right: 3rem;
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    opacity: .3;
+    z-index: 10;
+  }
+  .scroll-hint span {
+    font-family: var(--font);
+    font-size: 10px;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--text);
+  }
+  .scroll-line {
+    width: 1px;
+    height: 28px;
+    background: linear-gradient(to bottom, transparent, var(--text));
+    animation: scrollLine 2s ease-in-out infinite;
+  }
+  @keyframes scrollLine { 0%,100%{opacity:.3} 50%{opacity:.7} }
+
+  /* ── SHARED ── */
+  section { max-width: 1200px; margin: 0 auto; padding: 6rem 3rem; }
+  .section-full { background: var(--off-white); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+  .section-full .inner { max-width: 1200px; margin: 0 auto; padding: 6rem 3rem; }
+  .divider-line { width: 100%; height: 1px; background: var(--border); }
+
+  .eyebrow {
+    font-family: var(--font);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--cyan);
+    margin-bottom: .9rem;
+  }
+
+  .section-title {
+    font-family: var(--font);
+    font-size: clamp(26px, 3vw, 42px);
+    font-weight: 800;
+    line-height: 1.12;
+    color: var(--text);
+    margin-bottom: 1rem;
+  }
+
+  .section-intro {
+    font-size: 17px;
+    font-weight: 300;
+    color: var(--text-muted);
+    max-width: 540px;
+    line-height: 1.7;
+    margin-bottom: 3rem;
+  }
+
+  /* ── VOOR WIE ── */
+  .voor-wie-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    margin-top: 3rem;
+  }
+
+  .voor-wie-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 2.2rem 1.8rem;
+    transition: box-shadow .25s, transform .25s;
+  }
+  .voor-wie-card:hover { box-shadow: 0 8px 32px rgba(0,0,0,0.07); transform: translateY(-2px); }
+
+  .vw-icon {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: var(--cyan-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.2rem;
+  }
+  .vw-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--cyan); }
+
+  .voor-wie-card h3 {
+    font-family: var(--font);
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: .5rem;
+  }
+  .voor-wie-card p { font-size: 14px; font-weight: 300; color: var(--text-muted); line-height: 1.65; }
+  .voor-wie-card .pain {
+    margin-top: .9rem;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--cyan-dark);
+    font-family: var(--font);
+  }
+
+  /* ── HOE WIJ WERKEN ── */
+  .steps-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+    margin-top: 3rem;
+  }
+
+  .step-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.8rem 1.6rem;
+    transition: box-shadow .25s, transform .25s;
+  }
+  .step-card:hover { box-shadow: 0 6px 24px rgba(0,0,0,0.06); transform: translateY(-2px); }
+
+  .step-num {
+    font-family: var(--font);
+    font-size: 38px;
+    font-weight: 800;
+    color: rgba(0,168,204,0.15);
+    line-height: 1;
+    margin-bottom: .8rem;
+  }
+  .step-card h3 { font-family: var(--font); font-size: 15px; font-weight: 700; color: var(--text); margin-bottom: .4rem; }
+  .step-card p { font-size: 13px; font-weight: 300; color: var(--text-muted); line-height: 1.6; }
+
+  /* ── PAKKETTEN ── */
+  .pakket-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    margin-top: 3rem;
+  }
+
+  .pakket-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 2.2rem 2rem 2rem;
+    display: flex;
+    flex-direction: column;
+    transition: box-shadow .25s;
+    position: relative;
+  }
+  .pakket-card:hover { box-shadow: 0 8px 32px rgba(0,0,0,0.07); }
+
+  .pakket-card.featured {
+    border-color: var(--cyan);
+    border-width: 2px;
+    box-shadow: 0 4px 24px rgba(0,168,204,0.1);
+  }
+
+  .featured-badge {
+    position: absolute;
+    top: -13px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: var(--font);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    background: var(--cyan);
+    color: var(--white);
+    padding: .25rem .9rem;
+    border-radius: 20px;
+    white-space: nowrap;
+  }
+
+  .pakket-label { font-family: var(--font); font-size: 10px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--cyan-dark); margin-bottom: .3rem; }
+  .pakket-title { font-family: var(--font); font-size: 22px; font-weight: 800; color: var(--text); margin-bottom: .7rem; }
+  .pakket-desc { font-size: 13px; font-weight: 300; color: var(--text-muted); line-height: 1.65; margin-bottom: 1.4rem; flex: 1; }
+
+  .pakket-features { list-style: none; margin-bottom: 1.6rem; }
+  .pakket-features li {
+    font-size: 13px;
+    color: var(--text-muted);
+    padding: .35rem 0 .35rem 1.1rem;
+    position: relative;
+    border-bottom: 1px solid var(--border);
+  }
+  .pakket-features li:last-child { border-bottom: none; }
+  .pakket-features li::before {
+    content: '';
+    position: absolute;
+    left: 0; top: .85rem;
+    width: 5px; height: 5px;
+    border-radius: 50%;
+    background: var(--cyan);
+    opacity: .7;
+  }
+
+  .pakket-price { font-family: var(--font); font-size: 20px; font-weight: 800; color: var(--text); margin-bottom: .15rem; }
+  .pakket-price-note { font-size: 11px; color: var(--text-light); margin-bottom: 1.3rem; }
+
+  .pakket-cta {
+    font-family: var(--font);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: .03em;
+    color: var(--white);
+    background: var(--cyan);
+    border: none;
+    padding: .75rem 1.4rem;
+    border-radius: 4px;
+    cursor: pointer;
+    text-decoration: none;
+    text-align: center;
+    transition: background .2s;
+    display: block;
+  }
+  .pakket-cta:hover { background: var(--cyan-dark); }
+  .pakket-cta.ghost { background: transparent; color: var(--text); border: 1.5px solid var(--border-strong); }
+  .pakket-cta.ghost:hover { border-color: var(--cyan); color: var(--cyan); background: transparent; }
+
+  /* ── AI SECTIE ── */
+  .ai-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6rem;
+    align-items: center;
+  }
+
+  .ai-visual { position: relative; height: 320px; }
+  .ai-orb {
+    position: absolute;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(0,168,204,0.12) 0%, transparent 70%);
+    border: 1.5px solid rgba(0,168,204,0.18);
+    animation: orb-pulse 4s ease-in-out infinite;
+  }
+  .orb-1 { width: 240px; height: 240px; top: 40px; left: 40px; }
+  .orb-2 { width: 140px; height: 140px; top: 100px; left: 0; animation-delay: 1s; border-color: rgba(0,168,204,0.1); }
+  .orb-3 { width: 80px; height: 80px; top: 160px; left: 200px; animation-delay: 2s; border-color: rgba(0,168,204,0.08); }
+  @keyframes orb-pulse { 0%,100%{transform:scale(1);opacity:.6} 50%{transform:scale(1.06);opacity:1} }
+
+  .ai-stats { position: absolute; bottom: 0; right: 0; display: flex; flex-direction: column; gap: .6rem; }
+  .ai-stat {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: .6rem 1rem;
+    text-align: right;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+  }
+  .ai-stat-num { font-family: var(--font); font-size: 20px; font-weight: 800; color: var(--cyan); display: block; }
+  .ai-stat-label { font-size: 11px; color: var(--text-muted); }
+
+  .ai-benefits { list-style: none; margin-top: 1.5rem; }
+  .ai-benefits li {
+    display: flex;
+    gap: .9rem;
+    align-items: flex-start;
+    padding: .9rem 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 14px;
+    color: var(--text-muted);
+    line-height: 1.55;
+  }
+  .ai-benefits li:last-child { border-bottom: none; }
+  .ai-bullet { width: 6px; height: 6px; border-radius: 50%; background: var(--cyan); flex-shrink: 0; margin-top: .44rem; }
+
+  /* ── OVER ONS ── */
+  .over-inner {
+    display: grid;
+    grid-template-columns: 1fr 1.4fr;
+    gap: 5rem;
+    align-items: start;
+  }
+
+  .over-photo {
+    position: relative;
+    border-radius: 12px;
+    overflow: hidden;
+    aspect-ratio: 3/4;
+    background: var(--surface2);
+  }
+
+  .over-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    display: block;
+  }
+
+  .photo-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: .6rem;
+    background: var(--surface);
+  }
+
+  .photo-placeholder-dot {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: var(--cyan-light);
+    border: 2px solid rgba(0,168,204,0.2);
+  }
+
+  .photo-placeholder p {
+    font-size: 13px;
+    color: var(--text-light);
+    font-family: var(--font);
+  }
+
+  .over-photo-accent {
+    position: absolute;
+    bottom: 1.5rem;
+    left: -1rem;
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: .7rem 1rem;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+  }
+  .over-photo-accent-num { font-family: var(--font); font-size: 22px; font-weight: 800; color: var(--cyan); display: block; }
+  .over-photo-accent-label { font-size: 11px; color: var(--text-muted); }
+
+  .over-content h2 { margin-bottom: 1rem; }
+  .over-content p { font-size: 15px; font-weight: 300; color: var(--text-muted); line-height: 1.75; margin-bottom: 1rem; }
+  .over-content p strong { font-weight: 600; color: var(--text); }
+
+  .waarden-grid { display: grid; grid-template-columns: 1fr 1fr; gap: .8rem; margin-top: 1.8rem; }
+  .waarde {
+    background: var(--off-white);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1rem 1.1rem;
+  }
+  .waarde h4 { font-family: var(--font); font-size: 13px; font-weight: 700; color: var(--text); margin-bottom: .25rem; }
+  .waarde p { font-size: 12px; color: var(--text-muted); line-height: 1.5; margin: 0; }
+
+  /* ── QUOTE ── */
+  .quote-section {
+    background: var(--cyan);
+    padding: 5rem 3rem;
+    text-align: center;
+  }
+  .quote-text {
+    font-family: var(--font);
+    font-size: clamp(20px, 2.8vw, 32px);
+    font-weight: 700;
+    color: var(--white);
+    line-height: 1.3;
+    max-width: 780px;
+    margin: 0 auto 1.2rem;
+  }
+  .quote-text em { font-style: normal; opacity: .8; }
+  .quote-attr { font-size: 13px; color: rgba(255,255,255,0.7); font-family: var(--font); letter-spacing: .06em; text-transform: uppercase; }
+
+  /* ── CTA ── */
+  .cta-section { text-align: center; padding: 7rem 3rem; max-width: 1200px; margin: 0 auto; }
+  .cta-section h2 { font-family: var(--font); font-size: clamp(26px, 3.5vw, 48px); font-weight: 800; color: var(--text); line-height: 1.1; margin-bottom: 1rem; }
+  .cta-section p { font-size: 17px; font-weight: 300; color: var(--text-muted); max-width: 480px; margin: 0 auto 2.5rem; line-height: 1.7; }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--near-black);
+    padding: 2.5rem 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+  .footer-logo img { height: 28px; filter: brightness(0) invert(1); }
+  .footer-links { display: flex; gap: 2rem; list-style: none; }
+  .footer-links a { font-family: var(--font); font-size: 11px; letter-spacing: .07em; text-transform: uppercase; color: rgba(255,255,255,0.4); text-decoration: none; transition: color .2s; }
+  .footer-links a:hover { color: var(--cyan); }
+  .footer-copy { font-size: 12px; color: rgba(255,255,255,0.3); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    section { padding: 4rem 1.5rem; }
+    .section-full .inner { padding: 4rem 1.5rem; }
+    .voor-wie-grid, .pakket-grid { grid-template-columns: 1fr; }
+    .steps-grid { grid-template-columns: 1fr 1fr; }
+    .ai-inner, .over-inner { grid-template-columns: 1fr; gap: 3rem; }
+    .ai-visual { height: 200px; }
+    .slide-content { padding: 0 1.5rem; }
+    .slide-headline { font-size: 30px; }
+    footer { flex-direction: column; align-items: flex-start; }
+    .waarden-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="navbar">
+  <a href="#" class="nav-logo">
+    <img src="logo.png" alt="Team Oxygen">
+  </a>
+  <ul class="nav-links">
+    <li><a href="#voor-wie">Voor wie</a></li>
+    <li><a href="#hoe">Hoe wij werken</a></li>
+    <li><a href="#pakketten">Pakketten</a></li>
+    <li><a href="#ai">AI & marketing</a></li>
+    <li><a href="#over">Over ons</a></li>
+    <li><a href="#artikelen">Artikelen</a></li>
+  </ul>
+  <a href="#contact" class="nav-cta">Plan een gesprek</a>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-photo" id="heroPhoto" style="display:block">
+    <img id="heroImg" src="foto-hero1.png" alt="Team Oxygen hero">
+  </div>
+  <div class="hero-placeholder" id="heroPlaceholder" style="display:none"></div>
+  <div class="hero-decor">
+    <div class="dr1 decor-ring"></div>
+    <div class="dr2 decor-ring"></div>
+    <div class="dr3 decor-ring"></div>
+  </div>
+  <div class="slides">
+    <div class="slide slide-1 active">
+      <div class="slide-content">
+        <div class="slide-label">Embedded marketing partner</div>
+        <h1 class="slide-headline">Jouw bedrijf groeit.<br><em>Je marketing nog niet.</em></h1>
+        <p class="slide-body">Team Oxygen neemt je volledige marketingfunctie over. Strategie én executie, embedded in jouw organisatie. Zodat jij je kunt richten op bouwen.</p>
+        <div class="slide-actions">
+          <a href="#contact" class="btn-primary">Plan een gesprek</a>
+          <a href="#hoe" class="btn-ghost">Hoe wij werken</a>
+        </div>
+      </div>
+    </div>
+    <div class="slide slide-2">
+      <div class="slide-content">
+        <div class="slide-label">AI-gedreven marketing</div>
+        <h1 class="slide-headline">Sneller. Slimmer.<br><em>Een stap voor.</em></h1>
+        <p class="slide-body">Team Oxygen versterkt jouw marketing met AI. Hogere productiviteit, slimmer ingezette uren en een voorsprong op de concurrentie die je direct voelt.</p>
+        <div class="slide-actions">
+          <a href="#ai" class="btn-primary">Ontdek onze aanpak</a>
+          <a href="#pakketten" class="btn-ghost">Bekijk pakketten</a>
+        </div>
+      </div>
+    </div>
+    <div class="slide slide-3">
+      <div class="slide-content">
+        <div class="slide-label">Voor ambitieuze B2B-bedrijven</div>
+        <h1 class="slide-headline">Marketing die ademt<br>met <em>jouw organisatie.</em></h1>
+        <p class="slide-body">Geen bureau, geen freelancer. Team Oxygen wordt jouw embedded marketingafdeling — met een vaste CMO en een team van specialisten erachter.</p>
+        <div class="slide-actions">
+          <a href="#voor-wie" class="btn-primary">Herken jij dit?</a>
+          <a href="#contact" class="btn-ghost">Neem contact op</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-indicators">
+    <button class="indicator active" onclick="goToSlide(0)"></button>
+    <button class="indicator" onclick="goToSlide(1)"></button>
+    <button class="indicator" onclick="goToSlide(2)"></button>
+  </div>
+  <div class="slide-progress" id="progress"></div>
+  <div class="scroll-hint">
+    <span>Scroll</span>
+    <div class="scroll-line"></div>
+  </div>
+</div>
+
+<!-- VOOR WIE -->
+<section id="voor-wie">
+  <p class="eyebrow">Voor wie</p>
+  <h2 class="section-title">Herken jij dit?</h2>
+  <p class="section-intro">Team Oxygen werkt voor ambitieuze B2B-bedrijven op een groeimoment. Of je nu midden in een overname zit, een generatiewissel doormaakt of eindelijk de stap maakt die je al lang wilde zetten.</p>
+  <div class="voor-wie-grid">
+    <div class="voor-wie-card">
+      <div class="vw-icon"><div class="vw-dot"></div></div>
+      <h3>PE-backed groeiplatformen</h3>
+      <p>Meerdere bedrijven, één richting. Jij bouwt aan een platform — wij bouwen het verhaal dat investeerders, klanten en medewerkers bindt.</p>
+      <p class="pain">Pijn: geen coherent groepsmerk na acquisities</p>
+    </div>
+    <div class="voor-wie-card">
+      <div class="vw-icon"><div class="vw-dot"></div></div>
+      <h3>Familiebedrijven in transitie</h3>
+      <p>Het bedrijf dat je hebt gebouwd, verdient een merk dat laat zien wat het is geworden. Wij helpen je die stap te zetten zonder het ziel te verliezen.</p>
+      <p class="pain">Pijn: merk loopt achter op de realiteit</p>
+    </div>
+    <div class="voor-wie-card">
+      <div class="vw-icon"><div class="vw-dot"></div></div>
+      <h3>Maakbedrijven & industrieel MKB</h3>
+      <p>Jij maakt iets dat werkt. Maar de markt weet het nog niet. Wij geven jouw vakmanschap de stem die het verdient.</p>
+      <p class="pain">Pijn: verliest deals aan concurrenten die beter communiceren</p>
+    </div>
+  </div>
+</section>
+
+<div class="divider-line"></div>
+
+<!-- HOE WIJ WERKEN -->
+<div class="section-full">
+  <div class="inner" id="hoe">
+    <p class="eyebrow">Onze aanpak</p>
+    <h2 class="section-title">Niet een bureau.<br>Jouw marketingafdeling.</h2>
+    <p class="section-intro">Embedded in jouw organisatie, met volledige verantwoordelijkheid voor strategie én uitvoering. Van dag één.</p>
+    <div class="steps-grid">
+      <div class="step-card">
+        <div class="step-num">01</div>
+        <h3>Diagnose</h3>
+        <p>We beginnen met luisteren. Wat speelt er echt? Wat heeft jouw bedrijf nodig om de volgende stap te zetten?</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">02</div>
+        <h3>Strategie</h3>
+        <p>Samen bouwen we een marketingstrategie die aansluit op jouw groeidoelen — helder, uitvoerbaar en direct bruikbaar.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">03</div>
+        <h3>Executie</h3>
+        <p>Het team gaat aan de slag. Wekelijkse cadence, maandelijkse rapportage, continu bijgestuurd op wat werkt.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">04</div>
+        <h3>Groei</h3>
+        <p>Een marketingfunctie die meegroeit met jouw bedrijf. Geen losse acties — resultaat dat je kunt meten.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PAKKETTEN -->
+<section id="pakketten">
+  <p class="eyebrow">Hoe we samenwerken</p>
+  <h2 class="section-title">Kies wat bij jouw situatie past</h2>
+  <p class="section-intro">Drie engagementvormen, elk afgestemd op een specifieke groeifase of uitdaging. Transparante prijzen, geen verborgen kosten.</p>
+  <div class="pakket-grid">
+    <div class="pakket-card featured">
+      <div class="featured-badge">Meest gekozen</div>
+      <div class="pakket-label">Flagship · Retainer</div>
+      <div class="pakket-title">Oxygen Core</div>
+      <p class="pakket-desc">De volledige marketingfunctie als doorlopend partnerschap. Jouw CMO, jouw team, jouw resultaat.</p>
+      <ul class="pakket-features">
+        <li>Welmoet als jouw CMO, 2 dagen per week</li>
+        <li>Uitvoerend specialist 1 dag per week</li>
+        <li>Strategie, copy, content & PR</li>
+        <li>Maandelijkse MT-rapportage</li>
+        <li>Agency management inbegrepen</li>
+      </ul>
+      <div class="pakket-price">€ 8.500 / maand</div>
+      <div class="pakket-price-note">excl. BTW · minimaal 6 maanden</div>
+      <a href="#contact" class="pakket-cta">Plan een gesprek</a>
+    </div>
+    <div class="pakket-card">
+      <div class="pakket-label">Projectmatig</div>
+      <div class="pakket-title">Oxygen Sprint</div>
+      <p class="pakket-desc">Een afgebakend transformatietraject met vaste scope, prijs en doorlooptijd.</p>
+      <ul class="pakket-features">
+        <li>Rebranding of GTM-lancering</li>
+        <li>Post-acquisitie integratie</li>
+        <li>Employer branding traject</li>
+        <li>8 tot 16 weken · vaste scope</li>
+        <li>Inclusief 4 weken nazorg</li>
+      </ul>
+      <div class="pakket-price">€ 18.000 – 45.000</div>
+      <div class="pakket-price-note">per project · afhankelijk van scope</div>
+      <a href="#contact" class="pakket-cta ghost">Meer informatie</a>
+    </div>
+    <div class="pakket-card">
+      <div class="pakket-label">Interim</div>
+      <div class="pakket-title">Oxygen Bridge</div>
+      <p class="pakket-desc">Welmoet fulltime als interim CMO bij een kritiek kantelpunt. Tijdelijk, maar met blijvend resultaat.</p>
+      <ul class="pakket-features">
+        <li>Welmoet fulltime aanwezig</li>
+        <li>Pre-exit of post-acquisitie</li>
+        <li>Acute marketing leadership gap</li>
+        <li>Board-level rapportage mogelijk</li>
+        <li>Minimaal 4 weken</li>
+      </ul>
+      <div class="pakket-price">€ 1.350 / dag</div>
+      <div class="pakket-price-note">excl. BTW · wekelijks factureerbaar</div>
+      <a href="#contact" class="pakket-cta ghost">Meer informatie</a>
+    </div>
+  </div>
+</section>
+
+<!-- CASES VISUAL -->
+<div style="width:100%;height:320px;overflow:hidden;position:relative">
+  <img src="foto-cases.png" alt="Team Oxygen in het veld" style="width:100%;height:100%;object-fit:cover;object-position:center 30%">
+  <div style="position:absolute;inset:0;background:linear-gradient(to right, rgba(247,246,242,0.92) 0%, rgba(247,246,242,0.5) 40%, transparent 70%)"></div>
+  <div style="position:absolute;top:50%;left:3rem;transform:translateY(-50%)">
+    <p style="font-family:Inter,sans-serif;font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#00a8cc;margin-bottom:.6rem">In de praktijk</p>
+    <p style="font-family:Inter,sans-serif;font-size:clamp(22px,2.5vw,36px);font-weight:800;color:#1a1a17;line-height:1.2;max-width:480px">Embedded betekent echt embedded. Bij jouw klanten, in jouw wereld.</p>
+  </div>
+</div>
+
+<!-- AI SECTIE -->
+<div class="section-full" id="ai">
+  <div class="inner ai-inner">
+    <div class="ai-visual">
+      <div class="orb-1 ai-orb"></div>
+      <div class="orb-2 ai-orb"></div>
+      <div class="orb-3 ai-orb"></div>
+      <div class="ai-stats">
+        <div class="ai-stat">
+          <span class="ai-stat-num">3×</span>
+          <span class="ai-stat-label">snellere contentontwikkeling</span>
+        </div>
+        <div class="ai-stat">
+          <span class="ai-stat-num">40%</span>
+          <span class="ai-stat-label">minder operationele uren</span>
+        </div>
+      </div>
+    </div>
+    <div class="ai-content">
+      <p class="eyebrow">AI & marketing</p>
+      <h2 class="section-title">Een stap voor op de concurrentie.</h2>
+      <p class="section-intro">Team Oxygen versterkt elke marketingactiviteit met AI. Niet als experiment, maar als structureel onderdeel van hoe we werken.</p>
+      <ul class="ai-benefits">
+        <li><div class="ai-bullet"></div><div>Hogere productiviteit — meer output met hetzelfde team, zonder in te leveren op kwaliteit.</div></li>
+        <li><div class="ai-bullet"></div><div>Slimmer ingezette uren — mensen doen het werk dat er echt toe doet. AI neemt de rest over.</div></li>
+        <li><div class="ai-bullet"></div><div>Snellere time-to-market — van idee tot campagne in een fractie van de tijd.</div></li>
+        <li><div class="ai-bullet"></div><div>Data-gedreven beslissingen — inzichten die jouw strategie sturen, geen onderbuikgevoel.</div></li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- OVER ONS -->
+<section id="over">
+  <p class="eyebrow">Over Team Oxygen</p>
+  <h2 class="section-title">Zuurstof voor groei.</h2>
+  <div class="over-inner" style="margin-top:2.5rem">
+    <div class="over-photo" id="overPhoto">
+      <img id="welmoetImg" src="foto-welmoet.jpeg" alt="Welmoet Lugt" style="display:block">
+      <div class="photo-placeholder" id="photoPlaceholder" style="display:none">
+        <div class="photo-placeholder-dot"></div>
+        <p>Foto van Welmoet</p>
+      </div>
+      <div class="over-photo-accent">
+        <span class="over-photo-accent-num">25+</span>
+        <span class="over-photo-accent-label">jaar B2B ervaring</span>
+      </div>
+    </div>
+    <div class="over-content">
+      <p>Team Oxygen is ontstaan vanuit een overtuiging die Welmoet Lugt in meer dan 25 jaar B2B-marketing steeds opnieuw zag bevestigd: de meeste ambitieuze bedrijven weten precies wat ze doen — maar niet hoe ze dat verhaal naar buiten brengen.</p>
+      <p>Ze bouwen geweldige producten. Ze bedienen klanten met toewijding. Ze groeien, acquireren, transformeren. Maar hun marketing loopt achter. Niet omdat ze het niet willen, maar omdat er simpelweg geen ruimte voor is.</p>
+      <p><strong>Dat is precies waar Team Oxygen voor is.</strong> Wij geven organisaties de zuurstof om te groeien — door de marketingfunctie over te nemen, zodat leiders zich kunnen richten op wat ze echt goed doen.</p>
+      <div class="waarden-grid">
+        <div class="waarde">
+          <h4>Eigenaarschap boven advies</h4>
+          <p>Wij nemen verantwoordelijkheid voor het resultaat — van strategie tot uitvoering.</p>
+        </div>
+        <div class="waarde">
+          <h4>Eerlijkheid boven comfort</h4>
+          <p>Wij zeggen wat we denken, ook als dat ongemakkelijk is.</p>
+        </div>
+        <div class="waarde">
+          <h4>Groei met impact</h4>
+          <p>ESG is geen vinkje — het is een kans om je te onderscheiden.</p>
+        </div>
+        <div class="waarde">
+          <h4>Mensen boven processen</h4>
+          <p>Bedrijven zijn mensen. Wij investeren in relaties die blijven.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- QUOTE -->
+<div class="quote-section">
+  <p class="quote-text">"De meeste bedrijven weten precies wat ze doen, maar niet hoe ze dat verhaal naar buiten brengen. <em>Dat is precies waar wij voor zijn.</em>"</p>
+  <p class="quote-attr">Welmoet Lugt — Founder, Team Oxygen</p>
+</div>
+
+<!-- CTA -->
+<div class="cta-section" id="contact">
+  <p class="eyebrow">Laten we kennismaken</p>
+  <h2>Klaar om te groeien?</h2>
+  <p>Plan een gesprek van 30 minuten met Welmoet. Geen pitch, geen verkoopverhaal — gewoon een eerlijk gesprek over waar jouw bedrijf staat en waar je naartoe wilt.</p>
+  <a href="mailto:welmoet@teamoxygen.nl" class="btn-primary">Plan een gesprek van 30 minuten</a>
+</div>
+
+
+<!-- ARTIKELEN -->
+<section id="artikelen" style="background:var(--off-white);border-top:1px solid var(--border);padding:5rem 3rem">
+  <div style="max-width:1200px;margin:0 auto">
+    <p class="eyebrow">Inzichten & artikelen</p>
+    <h2 class="section-title" style="margin-bottom:.8rem">Denken over groei.</h2>
+    <p class="section-intro" style="margin-bottom:2.5rem">Praktische inzichten over B2B marketing, AI en organisatiegroei — geschreven vanuit de praktijk.</p>
+    <div id="artikelen-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem">
+      <!-- Artikelen worden hier geladen via JavaScript -->
+      <div style="background:var(--white);border:1px solid var(--border);border-radius:10px;overflow:hidden">
+        <div style="height:180px;background:var(--surface2);overflow:hidden">
+          <img src="foto-hero2.png" alt="" style="width:100%;height:100%;object-fit:cover">
+        </div>
+        <div style="padding:1.4rem">
+          <span style="font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--cyan)">AI & marketing</span>
+          <h3 style="font-family:Inter,sans-serif;font-size:16px;font-weight:700;color:var(--text);margin:.5rem 0 .5rem;line-height:1.3">Waarom AI de spelregels van B2B marketing verandert</h3>
+          <p style="font-size:13px;color:var(--text-muted);line-height:1.6;margin-bottom:1rem">AI is niet meer de toekomst van marketing — het is het heden. Bedrijven die nu investeren pakken een voorsprong die moeilijk in te halen is.</p>
+          <a href="artikelen/2025-04-01-marketing-en-ai" style="font-family:Inter,sans-serif;font-size:12px;font-weight:700;color:var(--cyan);text-decoration:none;letter-spacing:.04em;text-transform:uppercase">Lees meer →</a>
+        </div>
+      </div>
+      <div style="background:var(--white);border:1px solid var(--border);border-radius:10px;padding:1.4rem;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;min-height:280px">
+        <div style="width:44px;height:44px;border-radius:50%;background:var(--cyan-light);display:flex;align-items:center;justify-content:center;margin-bottom:1rem">
+          <div style="width:10px;height:10px;border-radius:50%;background:var(--cyan)"></div>
+        </div>
+        <p style="font-family:Inter,sans-serif;font-size:14px;font-weight:600;color:var(--text);margin-bottom:.4rem">Nieuw artikel schrijven</p>
+        <p style="font-size:13px;color:var(--text-muted);margin-bottom:1rem">Ga naar jouw beheerpagina om een artikel toe te voegen.</p>
+        <a href="/admin" style="font-family:Inter,sans-serif;font-size:12px;font-weight:700;color:var(--white);background:var(--cyan);padding:.5rem 1.1rem;border-radius:4px;text-decoration:none">Open beheer</a>
+      </div>
+      <div style="background:var(--white);border:1px solid var(--border);border-radius:10px;padding:1.4rem;display:flex;flex-direction:column;justify-content:space-between;min-height:280px">
+        <div>
+          <p style="font-family:Inter,sans-serif;font-size:13px;font-weight:700;color:var(--text);margin-bottom:.6rem">Blijf op de hoogte</p>
+          <p style="font-size:13px;color:var(--text-muted);line-height:1.6;margin-bottom:1rem">Ontvang nieuwe artikelen en inzichten van Team Oxygen direct in je inbox.</p>
+        </div>
+        <div>
+          <input type="email" placeholder="jouw@emailadres.nl" style="width:100%;padding:.6rem .8rem;border:1px solid var(--border-strong);border-radius:4px;font-size:13px;margin-bottom:.5rem;font-family:Inter,sans-serif;color:var(--text);background:var(--white)">
+          <button style="width:100%;padding:.6rem;background:var(--cyan);color:white;border:none;border-radius:4px;font-family:Inter,sans-serif;font-size:13px;font-weight:700;cursor:pointer">Aanmelden</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">
+    <img src="logo.png" alt="Team Oxygen">
+  </div>
+  <ul class="footer-links">
+    <li><a href="#voor-wie">Voor wie</a></li>
+    <li><a href="#pakketten">Pakketten</a></li>
+    <li><a href="#ai">AI & marketing</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <p class="footer-copy">© 2025 Team Oxygen · Leiden, Nederland</p>
+</footer>
+
+<script>
+  // Hero slide photo switcher
+  const slidePhotos = [
+    'foto-hero1.png',
+    'foto-hero2.png',
+    'foto-hero3.png'
+  ];
+  const heroImg = document.getElementById('heroImg');
+
+  // Nav scroll
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 60);
+  });
+
+  // Slideshow
+  let current = 0;
+  const slides = document.querySelectorAll('.slide');
+  const indicators = document.querySelectorAll('.indicator');
+  const progress = document.getElementById('progress');
+  let timer;
+
+  function goToSlide(n) {
+    slides[current].classList.remove('active');
+    indicators[current].classList.remove('active');
+    current = n;
+    slides[current].classList.add('active');
+    indicators[current].classList.add('active');
+    heroImg.style.opacity = '0';
+    setTimeout(() => {
+      heroImg.src = slidePhotos[current];
+      heroImg.style.opacity = '1';
+    }, 400);
+    resetProgress();
+  }
+
+  function nextSlide() { goToSlide((current + 1) % slides.length); }
+
+  function resetProgress() {
+    progress.classList.remove('animating');
+    progress.style.width = '0%';
+    clearTimeout(timer);
+    void progress.offsetWidth;
+    progress.classList.add('animating');
+    timer = setTimeout(nextSlide, 5000);
+  }
+
+  resetProgress();
+
+  // ── FOTO INSTRUCTIES ──
+  // Hero foto invoegen:
+  // 1. Vervang de src hieronder met het pad naar jouw foto
+  // 2. Verwijder de twee commentaarregels om het te activeren
+  //
+  // var heroSrc = 'jouw-hero-foto.jpg';
+  // document.getElementById('heroPhoto').style.display = 'block';
+  // document.getElementById('heroImg').src = heroSrc;
+  // document.getElementById('heroPlaceholder').style.display = 'none';
+
+  // Welmoet foto invoegen:
+  // var welmoetSrc = 'jouw-welmoet-foto.jpg';
+  // document.getElementById('welmoetImg').src = welmoetSrc;
+  // document.getElementById('welmoetImg').style.display = 'block';
+  // document.getElementById('photoPlaceholder').style.display = 'none';
+</script>
+</body>
+</html>
