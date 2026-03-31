@@ -1,6 +1,5 @@
 backend:
-  name: github
-  repo: welmoet/team-oxygen
+  name: git-gateway
   branch: main
 
 media_folder: "images"
@@ -10,7 +9,6 @@ locale: nl
 
 collections:
 
-  # ── PAGINA-INHOUD ──
   - name: "instellingen"
     label: "Pagina-inhoud"
     files:
@@ -19,8 +17,8 @@ collections:
         label: "Homepage"
         file: "content/homepage.json"
         fields:
-          - { label: "Hero titel regel 1", name: "hero_titel_1", widget: "string", hint: "Bijv: Jouw bedrijf groeit." }
-          - { label: "Hero titel regel 2 (cyaan)", name: "hero_titel_2", widget: "string", hint: "Bijv: Je marketing nog niet." }
+          - { label: "Hero titel regel 1", name: "hero_titel_1", widget: "string" }
+          - { label: "Hero titel regel 2 (cyaan)", name: "hero_titel_2", widget: "string" }
           - { label: "Hero subtekst", name: "hero_subtekst", widget: "text" }
           - { label: "Hero foto slide 1", name: "hero_foto_1", widget: "image" }
           - { label: "Hero foto slide 2", name: "hero_foto_2", widget: "image" }
@@ -43,8 +41,8 @@ collections:
             name: "core"
             widget: "object"
             fields:
-              - { label: "Prijs", name: "prijs", widget: "string", hint: "Bijv: € 8.500 / maand" }
-              - { label: "Prijsnoot", name: "prijsnoot", widget: "string", hint: "Bijv: excl. BTW · minimaal 6 maanden" }
+              - { label: "Prijs", name: "prijs", widget: "string" }
+              - { label: "Prijsnoot", name: "prijsnoot", widget: "string" }
               - { label: "Omschrijving", name: "omschrijving", widget: "text" }
           - label: "Oxygen Sprint"
             name: "sprint"
@@ -67,10 +65,9 @@ collections:
         fields:
           - { label: "E-mailadres", name: "email", widget: "string" }
           - { label: "Telefoonnummer", name: "telefoon", widget: "string" }
-          - { label: "Calendly link", name: "calendly", widget: "string", hint: "Bijv: https://calendly.com/jouw-naam" }
+          - { label: "Calendly link", name: "calendly", widget: "string" }
           - { label: "LinkedIn URL", name: "linkedin", widget: "string" }
 
-  # ── ARTIKELEN / BLOG ──
   - name: "artikelen"
     label: "Artikelen"
     folder: "content/artikelen"
@@ -79,7 +76,7 @@ collections:
     fields:
       - { label: "Titel", name: "title", widget: "string" }
       - { label: "Publicatiedatum", name: "date", widget: "datetime", format: "DD-MM-YYYY" }
-      - { label: "Samenvatting", name: "samenvatting", widget: "text", hint: "Kort intro voor de artikellijst (max 2 zinnen)" }
+      - { label: "Samenvatting", name: "samenvatting", widget: "text" }
       - { label: "Omslagfoto", name: "foto", widget: "image", required: false }
       - { label: "Categorie", name: "categorie", widget: "select", options: ["Marketing strategie", "AI & marketing", "PE & groei", "Employer branding", "Nieuws"] }
       - { label: "Inhoud", name: "body", widget: "markdown" }
